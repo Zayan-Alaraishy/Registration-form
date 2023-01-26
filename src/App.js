@@ -33,7 +33,8 @@ const required = { value: true, message: "This field is required" };
 function App() {
   const { activeStep, nextStep, prevStep } = useSteps({ initialStep: 0 });
   const [accountType, setAccountType] = useState("individual");
-  const [formData, setFormData] = useState({});
+  const [gender, setGender] = useState("male");
+  const [enteredPassword, setEnteredPassword] = useState("");
   const {
     register,
     handleSubmit,
@@ -43,8 +44,8 @@ function App() {
   } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
   useEffect(() => {
-    setFormData(watch());
-  }, [watch]);
+    setEnteredPassword(watch("password"));
+  }, [watch("password")]);
 
   const next = async () => {
     let isValid = false;
@@ -98,18 +99,20 @@ function App() {
   }
 
   const validateConfirmPassword = (value) => {
-    if (value !== formData.password) {
+    if (value !== enteredPassword) {
       return "Confirm password does not match password";
     }
   };
 
-  const submitForm = () => {
-    alert("Welcome");
+  const onSubmit = (data) => {
+    nextStep();
+    //TODO: post request
   };
+
   return (
     <ChakraProvider theme={theme}>
       <Box p={"4em"} maxWidth={"80em"}>
-        <form onSubmit={handleSubmit(submitForm)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Steps activeStep={activeStep}>
             <Step label="Account Type">
               <Field
@@ -117,6 +120,7 @@ function App() {
                 error={errors?.accountType}
               >
                 <Select
+                  defaultValue={accountType}
                   {...register("accountType")}
                   borderColor="green.100"
                   focusBorderColor="green.100"
@@ -176,13 +180,13 @@ function App() {
                   </Field>
                   <Field label="Gender" error={errors?.gender?.message}>
                     <Select
+                      defaultValue={gender}
                       {...register("gender")}
                       borderColor="green.100"
                       focusBorderColor="green.100"
+                      onChange={(e) => setGender(e.target.value)}
                     >
-                      <option value="male" selected>
-                        Male
-                      </option>
+                      <option value="male">Male</option>
                       <option value="female">Female</option>
                       <option value="other">Other</option>
                     </Select>
@@ -399,7 +403,7 @@ function App() {
             alignItems="center"
             minWidth="max-content"
           >
-            {activeStep !== 0 && (
+            {activeStep > 0 && activeStep < 2 && (
               <Button
                 onClick={prevStep}
                 disabled={false}
@@ -410,18 +414,23 @@ function App() {
             )}
             <Spacer />
 
-            {activeStep !== 3 && (
+            {activeStep < 2 && (
               <Button onClick={next} backgroundColor="gray.300">
                 Next
               </Button>
             )}
-            {activeStep === 3 && (
-              <Button type="submit" onClick={next} backgroundColor="gray.300">
+            {activeStep === 2 && (
+              <Button type="submit" backgroundColor="gray.300">
                 Register
               </Button>
             )}
           </Flex>
         </form>
+        {activeStep === 3 && (
+          <div style={{ fontWeight: "bold", textAlign: "center" }}>
+            Your account have been created successfully!
+          </div>
+        )}
       </Box>
     </ChakraProvider>
   );
