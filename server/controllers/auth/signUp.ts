@@ -21,10 +21,10 @@ export const signUp = async (
       : signUpBusinessSchema
     ).validateAsync(data.data);
 
-    const { email, password, ...information } = data;
+    const { email, password, ...information } = data.data;
 
     const { rows } = await isEmailTaken(
-      data.email,
+      email,
       isIndividual ? "users" : "businesses"
     );
 
