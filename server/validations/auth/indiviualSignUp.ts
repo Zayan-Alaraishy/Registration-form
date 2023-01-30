@@ -1,4 +1,4 @@
-import joi from "@hapi/joi";
+import joi from "joi";
 
 const calculateAge = (dateString: string): number => {
   const today = new Date();
