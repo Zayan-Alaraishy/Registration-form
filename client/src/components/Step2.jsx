@@ -1,4 +1,4 @@
-import { Input, Select } from "@chakra-ui/react";
+import { Flex, Input, Select } from "@chakra-ui/react";
 
 import Field from "./Field";
 
@@ -30,132 +30,138 @@ export default function Step2({
   return (
     <>
       {accountType === "individual" ? (
-        <>
-          <Field label="First name" error={errors?.firstName?.message}>
-            <Input
-              {...register("firstName", {
-                required,
-              })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.firstName
-                  ? "red.300"
-                  : watch("firstName")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.firstName
-                  ? "red.300"
-                  : watch("firstName")
-                  ? "green.100"
-                  : "gray.300"
-              }
-            />
-          </Field>
-          <Field label="Last name" error={errors?.lastName?.message}>
-            <Input
-              {...register("lastName", {
-                required,
-              })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.lastName
-                  ? "red.300"
-                  : watch("lastName")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.lastName
-                  ? "red.300"
-                  : watch("lastName")
-                  ? "green.100"
-                  : "gray.300"
-              }
-            />
-          </Field>
-          <Field label="Gender" error={errors?.gender?.message}>
-            <Select
-              {...register("gender")}
-              borderColor="green.100"
-              focusBorderColor="green.100"
-            >
-              <option value="Male" selected>
-                Male
-              </option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </Select>
-          </Field>
-          <Field label="Birthdate" error={errors?.birthdate?.message}>
-            <Input
-              type="date"
-              {...register("birthdate", {
-                required,
-                validate: validateBirthdate,
-              })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.birthdate
-                  ? "red.300"
-                  : watch("birthdate")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.birthdate
-                  ? "red.300"
-                  : watch("birthdate")
-                  ? "green.100"
-                  : "gray.300"
-              }
-            />
-          </Field>
-          <Field label="Phone number" error={errors?.phone?.message}>
-            <Input
-              type="tel"
-              {...register("phone", { required })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.phone
-                  ? "red.300"
-                  : watch("phone")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.phone
-                  ? "red.300"
-                  : watch("phone")
-                  ? "green.100"
-                  : "gray.300"
-              }
-            />
-          </Field>
-          <Field label="Address" error={errors?.address?.message}>
-            <Input
-              {...register("address", { required })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.address
-                  ? "red.300"
-                  : watch("address")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.address
-                  ? "red.300"
-                  : watch("address")
-                  ? "green.100"
-                  : "gray.300"
-              }
-            />
-          </Field>
-        </>
+        <div className="my-8">
+          <Flex gap={"2"}>
+            <Field label="First name" error={errors?.firstName?.message}>
+              <Input
+                {...register("firstName", {
+                  required,
+                })}
+                errorBorderColor="red.300"
+                focusBorderColor={
+                  errors.firstName
+                    ? "red.300"
+                    : watch("firstName")
+                    ? "green.100"
+                    : "gray.300"
+                }
+                borderColor={
+                  errors.firstName
+                    ? "red.300"
+                    : watch("firstName")
+                    ? "green.100"
+                    : "gray.300"
+                }
+              />
+            </Field>
+            <Field label="Last name" error={errors?.lastName?.message}>
+              <Input
+                {...register("lastName", {
+                  required,
+                })}
+                errorBorderColor="red.300"
+                focusBorderColor={
+                  errors.lastName
+                    ? "red.300"
+                    : watch("lastName")
+                    ? "green.100"
+                    : "gray.300"
+                }
+                borderColor={
+                  errors.lastName
+                    ? "red.300"
+                    : watch("lastName")
+                    ? "green.100"
+                    : "gray.300"
+                }
+              />
+            </Field>
+          </Flex>
+          <Flex gap={"2"}>
+            <Field label="Gender" error={errors?.gender?.message}>
+              <Select
+                {...register("gender")}
+                borderColor="green.100"
+                focusBorderColor="green.100"
+              >
+                <option value="Male" selected>
+                  Male
+                </option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </Select>
+            </Field>
+            <Field label="Birthdate" error={errors?.birthdate?.message}>
+              <Input
+                type="date"
+                {...register("birthdate", {
+                  required,
+                  validate: validateBirthdate,
+                })}
+                errorBorderColor="red.300"
+                focusBorderColor={
+                  errors.birthdate
+                    ? "red.300"
+                    : watch("birthdate")
+                    ? "green.100"
+                    : "gray.300"
+                }
+                borderColor={
+                  errors.birthdate
+                    ? "red.300"
+                    : watch("birthdate")
+                    ? "green.100"
+                    : "gray.300"
+                }
+              />
+            </Field>
+          </Flex>
+          <Flex gap={"2"}>
+            <Field label="Phone number" error={errors?.phone?.message}>
+              <Input
+                type="tel"
+                {...register("phone", { required })}
+                errorBorderColor="red.300"
+                focusBorderColor={
+                  errors.phone
+                    ? "red.300"
+                    : watch("phone")
+                    ? "green.100"
+                    : "gray.300"
+                }
+                borderColor={
+                  errors.phone
+                    ? "red.300"
+                    : watch("phone")
+                    ? "green.100"
+                    : "gray.300"
+                }
+              />
+            </Field>
+            <Field label="Address" error={errors?.address?.message}>
+              <Input
+                {...register("address", { required })}
+                errorBorderColor="red.300"
+                focusBorderColor={
+                  errors.address
+                    ? "red.300"
+                    : watch("address")
+                    ? "green.100"
+                    : "gray.300"
+                }
+                borderColor={
+                  errors.address
+                    ? "red.300"
+                    : watch("address")
+                    ? "green.100"
+                    : "gray.300"
+                }
+              />
+            </Field>
+          </Flex>
+        </div>
       ) : (
-        <>
+        <div className="my-8">
           <Field label="Business Name" error={errors?.businessName?.message}>
             <Input
               {...register("businessName", { required })}
@@ -219,7 +225,7 @@ export default function Step2({
               }
             />
           </Field>
-        </>
+        </div>
       )}
     </>
   );

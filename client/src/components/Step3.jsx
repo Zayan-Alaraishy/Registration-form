@@ -9,7 +9,7 @@ export default function Step3({ register, errors, required, watch, formData }) {
     }
   };
   return (
-    <>
+    <div className="my-8">
       <Field label="Email" error={errors?.email?.message}>
         <Input
           type="email"
@@ -81,6 +81,6 @@ export default function Step3({ register, errors, required, watch, formData }) {
           })}
         />
       </Field>
-    </>
+    </div>
   );
 }

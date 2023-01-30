@@ -8,6 +8,7 @@ import Controllers from "./components/Controllers";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
+import bg from "./assets/geometrica.png";
 
 const theme = extendTheme({
   components: {
@@ -53,46 +54,52 @@ function App() {
       .catch((error) => console.error(error));
   };
   return (
-    <ChakraProvider theme={theme}>
-      <Box p={"4em"} maxWidth={"80em"}>
-        <form onSubmit={handleSubmit(submitForm)}>
-          <Steps activeStep={activeStep}>
-            <Step label="Account Type">
-              <Step1
-                errors={errors}
-                register={register}
-                setAccountType={setAccountType}
-              />
-            </Step>
-            <Step label="Basic Info">
-              <Step2
-                register={register}
-                errors={errors}
-                required={required}
-                accountType={accountType}
-                watch={watch}
-              />
-            </Step>
-            <Step label="Account Info">
-              <Step3
-                register={register}
-                errors={errors}
-                required={required}
-                formData={formData}
-                watch={watch}
-              />
-            </Step>
-          </Steps>
-          <Controllers
-            activeStep={activeStep}
-            prevStep={prevStep}
-            accountType={accountType}
-            nextStep={nextStep}
-            trigger={trigger}
-          />
-        </form>
-      </Box>
-    </ChakraProvider>
+    <main style={{ display: "flex", minHeight: "100vh", position: "relative" }}>
+      <div style={{ backgroundImage: `url(${bg})`, width: "20%" }}></div>
+      <ChakraProvider theme={theme}>
+        <Box p={"2em"} width={"100%"}>
+          <h1 className="font-bold mb-8 text-[#004159] text-xl">
+            Hello👋 Let's create your accounts
+          </h1>
+          <form onSubmit={handleSubmit(submitForm)}>
+            <Steps activeStep={activeStep}>
+              <Step label="Account Type">
+                <Step1
+                  errors={errors}
+                  register={register}
+                  setAccountType={setAccountType}
+                />
+              </Step>
+              <Step label="Basic Info">
+                <Step2
+                  register={register}
+                  errors={errors}
+                  required={required}
+                  accountType={accountType}
+                  watch={watch}
+                />
+              </Step>
+              <Step label="Account Info">
+                <Step3
+                  register={register}
+                  errors={errors}
+                  required={required}
+                  formData={formData}
+                  watch={watch}
+                />
+              </Step>
+            </Steps>
+            <Controllers
+              activeStep={activeStep}
+              prevStep={prevStep}
+              accountType={accountType}
+              nextStep={nextStep}
+              trigger={trigger}
+            />
+          </form>
+        </Box>
+      </ChakraProvider>
+    </main>
   );
 }
 
