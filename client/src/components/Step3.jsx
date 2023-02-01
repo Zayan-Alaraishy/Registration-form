@@ -1,17 +1,22 @@
-import { Input } from "@chakra-ui/react";
-
 import Field from "./Field";
 
-export default function Step3({ register, errors, required, watch, formData }) {
+export default function Step3({
+  register,
+  errors,
+  required,
+  formData,
+  typingInputStyle,
+  placeholderStyle,
+}) {
   const validateConfirmPassword = (value) => {
     if (value !== formData.password) {
       return "Confirm password does not match password";
     }
   };
   return (
-    <>
-      <Field label="Email" error={errors?.email?.message}>
-        <Input
+    <div className="my-8">
+      <Field error={errors?.email?.message}>
+        <input
           type="email"
           {...register("email", {
             required,
@@ -20,17 +25,13 @@ export default function Step3({ register, errors, required, watch, formData }) {
               message: "Invalid email address",
             },
           })}
-          errorBorderColor="red.300"
-          focusBorderColor={
-            errors.email ? "red.300" : watch("email") ? "green.100" : "gray.300"
-          }
-          borderColor={
-            errors.email ? "red.300" : watch("email") ? "green.100" : "gray.300"
-          }
+          placeholder={"Email"}
+          className={typingInputStyle("email")}
         />
+        <span className={placeholderStyle}>Email</span>
       </Field>
-      <Field label="Password" error={errors?.password?.message}>
-        <Input
+      <Field error={errors?.password?.message}>
+        <input
           type="password"
           {...register("password", {
             required,
@@ -40,47 +41,23 @@ export default function Step3({ register, errors, required, watch, formData }) {
                 "Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 number, and 1 special character",
             },
           })}
-          errorBorderColor="red.300"
-          focusBorderColor={
-            errors.password
-              ? "red.300"
-              : watch("password")
-              ? "green.100"
-              : "gray.300"
-          }
-          borderColor={
-            errors.password
-              ? "red.300"
-              : watch("password")
-              ? "green.100"
-              : "gray.300"
-          }
+          placeholder={"Password"}
+          className={typingInputStyle("password")}
         />
+        <span className={placeholderStyle}>Password</span>
       </Field>
-      <Field label="Confirm Password" error={errors?.confirmPassword?.message}>
-        <Input
+      <Field error={errors?.confirmPassword?.message}>
+        <input
           type="password"
-          errorBorderColor="red.300"
-          focusBorderColor={
-            errors.confirmPassword
-              ? "red.300"
-              : watch("confirmPassword")
-              ? "green.100"
-              : "gray.300"
-          }
-          borderColor={
-            errors.confirmPassword
-              ? "red.300"
-              : watch("confirmPassword")
-              ? "green.100"
-              : "gray.300"
-          }
           {...register("confirmPassword", {
             required,
             validate: validateConfirmPassword,
           })}
+          placeholder={"Confirm Password"}
+          className={typingInputStyle("confirmPassword")}
         />
+        <span className={placeholderStyle}>Confirm Password</span>
       </Field>
-    </>
+    </div>
   );
 }
