@@ -12,7 +12,7 @@ export default function Controllers({
 
     switch (activeStep) {
       case 0:
-        isValid = true;
+        isValid = await trigger("accountType");
         break;
       case 1:
         if (accountType === "individual")
@@ -46,20 +46,20 @@ export default function Controllers({
       alignItems="center"
       minWidth="max-content"
     >
-      {activeStep !== 0 && (
+      {activeStep > 0 && activeStep < 3 && (
         <Button onClick={prevStep} disabled={false} backgroundColor="gray.300">
           Back
         </Button>
       )}
       <Spacer />
 
-      {activeStep !== 3 && (
+      {activeStep < 2 && (
         <Button onClick={next} backgroundColor="gray.300">
           Next
         </Button>
       )}
-      {activeStep === 3 && (
-        <Button type="submit" onClick={next} backgroundColor="gray.300">
+      {activeStep === 2 && (
+        <Button type="submit" backgroundColor="gray.300">
           Register
         </Button>
       )}

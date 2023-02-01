@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input:focus ~ .placeholder-text,
+input:not(:placeholder-shown) ~ .placeholder-text {
+  @apply text-blue-dark transform -translate-y-6 -translate-x-2;
+}

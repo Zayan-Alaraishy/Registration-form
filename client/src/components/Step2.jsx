@@ -1,5 +1,3 @@
-import { Flex, Input, Select } from "@chakra-ui/react";
-
 import Field from "./Field";
 
 export default function Step2({
@@ -8,6 +6,8 @@ export default function Step2({
   errors,
   watch,
   required,
+  typingInputStyle,
+  placeholderStyle,
 }) {
   const validateBirthdate = (value) => {
     const age = calculateAge(value);
@@ -31,199 +31,101 @@ export default function Step2({
     <>
       {accountType === "individual" ? (
         <div className="my-8">
-          <Flex gap={"2"}>
-            <Field label="First name" error={errors?.firstName?.message}>
-              <Input
-                {...register("firstName", {
-                  required,
-                })}
-                errorBorderColor="red.300"
-                focusBorderColor={
-                  errors.firstName
-                    ? "red.300"
-                    : watch("firstName")
-                    ? "green.100"
-                    : "gray.300"
-                }
-                borderColor={
-                  errors.firstName
-                    ? "red.300"
-                    : watch("firstName")
-                    ? "green.100"
-                    : "gray.300"
-                }
-              />
-            </Field>
-            <Field label="Last name" error={errors?.lastName?.message}>
-              <Input
-                {...register("lastName", {
-                  required,
-                })}
-                errorBorderColor="red.300"
-                focusBorderColor={
-                  errors.lastName
-                    ? "red.300"
-                    : watch("lastName")
-                    ? "green.100"
-                    : "gray.300"
-                }
-                borderColor={
-                  errors.lastName
-                    ? "red.300"
-                    : watch("lastName")
-                    ? "green.100"
-                    : "gray.300"
-                }
-              />
-            </Field>
-          </Flex>
-          <Flex gap={"2"}>
-            <Field label="Gender" error={errors?.gender?.message}>
-              <Select
-                {...register("gender")}
-                borderColor="green.100"
-                focusBorderColor="green.100"
-              >
-                <option value="Male" selected>
-                  Male
-                </option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </Select>
-            </Field>
-            <Field label="Birthdate" error={errors?.birthdate?.message}>
-              <Input
-                type="date"
-                {...register("birthdate", {
-                  required,
-                  validate: validateBirthdate,
-                })}
-                errorBorderColor="red.300"
-                focusBorderColor={
-                  errors.birthdate
-                    ? "red.300"
-                    : watch("birthdate")
-                    ? "green.100"
-                    : "gray.300"
-                }
-                borderColor={
-                  errors.birthdate
-                    ? "red.300"
-                    : watch("birthdate")
-                    ? "green.100"
-                    : "gray.300"
-                }
-              />
-            </Field>
-          </Flex>
-          <Flex gap={"2"}>
-            <Field label="Phone number" error={errors?.phone?.message}>
-              <Input
-                type="tel"
-                {...register("phone", { required })}
-                errorBorderColor="red.300"
-                focusBorderColor={
-                  errors.phone
-                    ? "red.300"
-                    : watch("phone")
-                    ? "green.100"
-                    : "gray.300"
-                }
-                borderColor={
-                  errors.phone
-                    ? "red.300"
-                    : watch("phone")
-                    ? "green.100"
-                    : "gray.300"
-                }
-              />
-            </Field>
-            <Field label="Address" error={errors?.address?.message}>
-              <Input
-                {...register("address", { required })}
-                errorBorderColor="red.300"
-                focusBorderColor={
-                  errors.address
-                    ? "red.300"
-                    : watch("address")
-                    ? "green.100"
-                    : "gray.300"
-                }
-                borderColor={
-                  errors.address
-                    ? "red.300"
-                    : watch("address")
-                    ? "green.100"
-                    : "gray.300"
-                }
-              />
-            </Field>
-          </Flex>
+          <Field error={errors?.firstName?.message}>
+            <input
+              {...register("firstName", {
+                required,
+              })}
+              placeholder={"First name"}
+              className={typingInputStyle("firstName")}
+            />
+            <span className={placeholderStyle}>First name</span>
+          </Field>
+          <Field error={errors?.lastName?.message}>
+            <input
+              {...register("lastName", {
+                required,
+              })}
+              placeholder={"Last name"}
+              className={typingInputStyle("lastName")}
+            />
+            <span className={placeholderStyle}>Last name</span>
+          </Field>
+          <Field error={errors?.gender?.message}>
+            <select
+              {...register("gender", { required })}
+              className={`border-2 border-grey-light w-full py-2.5 px-1 rounded  border-opacity-50 outline-green ${
+                errors.gender
+                  ? "border-danger focus:border-danger"
+                  : watch("gender")
+                  ? "border-green focus:border-green"
+                  : "border-grey-light focus:border-grey-light"
+              }`}
+            >
+              <option value="" hidden>
+                Select your gender
+              </option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </Field>
+          <Field error={errors?.birthdate?.message}>
+            <input
+              type="date"
+              {...register("birthdate", {
+                required,
+                validate: validateBirthdate,
+              })}
+              placeholder={"Birthdate"}
+              className={typingInputStyle("birthdate")}
+            />
+            <span className={placeholderStyle}>Birthdate</span>
+          </Field>
+          <Field error={errors?.phone?.message}>
+            <input
+              type="tel"
+              {...register("phone", { required })}
+              placeholder={"Phone number"}
+              className={typingInputStyle("phone")}
+            />
+            <span className={placeholderStyle}>Phone number</span>
+          </Field>
+          <Field error={errors?.address?.message}>
+            <input
+              {...register("address", { required })}
+              placeholder={"Address"}
+              className={typingInputStyle("address")}
+            />
+            <span className={placeholderStyle}>Address</span>
+          </Field>
         </div>
       ) : (
         <div className="my-8">
-          <Field label="Business Name" error={errors?.businessName?.message}>
-            <Input
+          <Field error={errors?.businessName?.message}>
+            <input
               {...register("businessName", { required })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.businessName
-                  ? "red.300"
-                  : watch("businessName")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.businessName
-                  ? "red.300"
-                  : watch("businessName")
-                  ? "green.100"
-                  : "gray.300"
-              }
+              placeholder={"Business Name"}
+              className={typingInputStyle("businessName")}
             />
+            <span className={placeholderStyle}>Business Name</span>
           </Field>
-          <Field
-            label="Business Phone Number"
-            error={errors?.businessPhone?.message}
-          >
-            <Input
+          <Field error={errors?.businessPhone?.message}>
+            <input
+              type="tel"
               {...register("businessPhone", { required })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.businessPhone
-                  ? "red.300"
-                  : watch("businessPhone")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.businessPhone
-                  ? "red.300"
-                  : watch("businessPhone")
-                  ? "green.100"
-                  : "gray.300"
-              }
+              placeholder={"Business Phone Number"}
+              className={typingInputStyle("businessPhone")}
             />
+            <span className={placeholderStyle}>Business Phone Number</span>
           </Field>
-          <Field label="Location" error={errors?.businessAddress?.message}>
-            <Input
+          <Field error={errors?.businessAddress?.message}>
+            <input
               {...register("businessAddress", { required })}
-              errorBorderColor="red.300"
-              focusBorderColor={
-                errors.businessAddress
-                  ? "red.300"
-                  : watch("businessAddress")
-                  ? "green.100"
-                  : "gray.300"
-              }
-              borderColor={
-                errors.businessAddress
-                  ? "red.300"
-                  : watch("businessAddress")
-                  ? "green.100"
-                  : "gray.300"
-              }
+              placeholder={"Location"}
+              className={typingInputStyle("businessAddress")}
             />
+            <span className={placeholderStyle}>Location</span>
           </Field>
         </div>
       )}

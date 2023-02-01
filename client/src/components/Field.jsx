@@ -1,11 +1,12 @@
-import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage } from "@chakra-ui/react";
 
-export default function Field({ label, children, error }) {
+export default function Field({ children, error }) {
   return (
-    <FormControl isInvalid={Boolean(error)}>
-      <FormLabel>{label}</FormLabel>
+    <FormControl isInvalid={Boolean(error)} className="mb-4">
       {children}
-      {error && <FormErrorMessage>{error}</FormErrorMessage>}
+      {error && (
+        <FormErrorMessage className="text-danger">{error}</FormErrorMessage>
+      )}
     </FormControl>
   );
 }

@@ -8,20 +8,10 @@ import Controllers from "./components/Controllers";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
-import bg from "./assets/geometrica.png";
 
 const theme = extendTheme({
   components: {
     Steps: StepsTheme,
-  },
-  colors: {
-    gray: {
-      100: "#fafafa",
-      200: "#f7f7f7",
-    },
-    green: {
-      100: "#38a169",
-    },
   },
 });
 
@@ -29,7 +19,7 @@ const required = { value: true, message: "This field is required" };
 
 function App() {
   const { activeStep, nextStep, prevStep } = useSteps({ initialStep: 0 });
-  const [accountType, setAccountType] = useState("individual");
+  const [accountType, setAccountType] = useState("");
   const [formData, setFormData] = useState({});
   const {
     register,
@@ -44,29 +34,42 @@ function App() {
     setFormData(watch());
   }, [watch()]);
 
-  const submitForm = (data) => {
+  const submitForm = async (data) => {
     const { confirmPassword, accountType, ...updatedObj } = data;
-    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
-    reset();
     axios
       .post("/api/v1/signup", { accountType, data: updatedObj })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.error(error));
+      .then((res) => nextStep())
+      .catch((error) => alert(error.response.data.message));
   };
+
+  const typingInputStyle = (name) => {
+    return `w-full border-2 py-2 px-4 rounded border-grey-light placeholder-grey-light placeholder-opacity-0 border-opacity-50 outline-none transition duration-200 ${
+      errors[name]
+        ? "border-danger focus:border-danger"
+        : watch(name)
+        ? "border-green focus:border-green"
+        : "border-grey-light focus:border-grey-light"
+    }`;
+  };
+
+  const placeholderStyle =
+    "placeholder-text px-1 bg-white text-grey-light absolute left-0 top-2.5 mx-5 transition duration-200";
   return (
-    <main style={{ display: "flex", minHeight: "100vh", position: "relative" }}>
-      <div style={{ backgroundImage: `url(${bg})`, width: "20%" }}></div>
+    <main className="flex min-h-screen relative">
+      <div className="bg-[url('./assets/geometrica.png')] w-[15%]"></div>
       <ChakraProvider theme={theme}>
-        <Box p={"2em"} width={"100%"}>
+        <Box className="p-6 lg:w-[60%] sm:w-full">
           <h1 className="font-bold mb-8 text-[#004159] text-xl">
             Hello👋 Let's create your accounts
           </h1>
-          <form onSubmit={handleSubmit(submitForm)}>
+          <form onSubmit={handleSubmit(submitForm)} autoComplete="off">
             <Steps activeStep={activeStep}>
               <Step label="Account Type">
                 <Step1
                   errors={errors}
                   register={register}
+                  required={required}
+                  watch={watch}
                   setAccountType={setAccountType}
                 />
               </Step>
@@ -77,6 +80,8 @@ function App() {
                   required={required}
                   accountType={accountType}
                   watch={watch}
+                  typingInputStyle={typingInputStyle}
+                  placeholderStyle={placeholderStyle}
                 />
               </Step>
               <Step label="Account Info">
@@ -85,7 +90,8 @@ function App() {
                   errors={errors}
                   required={required}
                   formData={formData}
-                  watch={watch}
+                  typingInputStyle={typingInputStyle}
+                  placeholderStyle={placeholderStyle}
                 />
               </Step>
             </Steps>
@@ -97,6 +103,7 @@ function App() {
               trigger={trigger}
             />
           </form>
+          {activeStep === 3 && <h1>Signed up successfully! Congrats 🎊</h1>}
         </Box>
       </ChakraProvider>
     </main>
