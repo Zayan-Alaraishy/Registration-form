@@ -1,15 +1,17 @@
+import { useState } from "react";
 import Field from "./Field";
 
 export default function Step3({
   register,
   errors,
   required,
-  formData,
   typingInputStyle,
   placeholderStyle,
 }) {
+  const [enteredPassword, setEnteredPassword] = useState("");
+
   const validateConfirmPassword = (value) => {
-    if (value !== formData.password) {
+    if (value !== enteredPassword) {
       return "Confirm password does not match password";
     }
   };
@@ -34,6 +36,7 @@ export default function Step3({
         <input
           type="password"
           {...register("password", {
+            onChange: (e) => setEnteredPassword(e.target.value),
             required,
             pattern: {
               value: /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/,
@@ -41,6 +44,7 @@ export default function Step3({
                 "Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 number, and 1 special character",
             },
           })}
+          value={enteredPassword}
           placeholder={"Password"}
           className={typingInputStyle("password")}
         />

@@ -1,6 +1,6 @@
 import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
 import { Steps, Step, useSteps, StepsTheme } from "chakra-ui-steps";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -20,19 +20,15 @@ const required = { value: true, message: "This field is required" };
 function App() {
   const { activeStep, nextStep, prevStep } = useSteps({ initialStep: 0 });
   const [accountType, setAccountType] = useState("");
-  const [formData, setFormData] = useState({});
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
     watch,
-    reset,
   } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
-  useEffect(() => {
-    setFormData(watch());
-  }, [watch()]);
+  watch();
 
   const submitForm = async (data) => {
     const { confirmPassword, accountType, ...updatedObj } = data;
@@ -89,7 +85,6 @@ function App() {
                   register={register}
                   errors={errors}
                   required={required}
-                  formData={formData}
                   typingInputStyle={typingInputStyle}
                   placeholderStyle={placeholderStyle}
                 />
